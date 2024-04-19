@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+from param_names import data_headers
+
 data = pd.read_csv('heart_attack_prediction_dataset.csv')
 X = data.iloc[:, 1:-1].values
 y = data.iloc[:, -1].values
@@ -27,8 +29,10 @@ for i in string_rows:
     X_test[i] = np.array([dictionary[x] for x in X_test[i]])
 
 
-final_rows = []
+final_dataset = []
 row_names = []
+
+it = 0
 
 for rowIndex in range(X_train.shape[0]):
 
@@ -36,7 +40,8 @@ for rowIndex in range(X_train.shape[0]):
     first_entry = row[0] 
 
     if type(first_entry) is not str:
-        final_rows.append(row)
+        final_dataset.append(row)
+        row_names.append(data_headers[it])
     else:
         bp_list = row.tolist()
         split_bp_list = [bp.split('/') for bp in bp_list]
@@ -44,15 +49,20 @@ for rowIndex in range(X_train.shape[0]):
         diastolic_bp_list = np.array([int(bp[1]) for bp in split_bp_list])
         row_names.append("Systolic Blood Pressure")
         row_names.append("Diastolic Blood Pressure")
-        final_rows.append(systolic_bp_list)
-        final_rows.append(diastolic_bp_list)
+        final_dataset.append(systolic_bp_list)
+        final_dataset.append(diastolic_bp_list)
 
-final_rows = np.array(final_rows)
+    it += 1
 
+final_dataset = np.array(final_dataset)
 
 if __name__ == '__main__':
     # testing here
-    print(X_train)
-    print(final_rows.shape)
-    print(final_rows[3])
-    print(final_rows[4])
+    print(X_train.shape)
+    print(final_dataset.shape)
+    print(final_dataset[3])
+    print(final_dataset[4])
+    print(len(row_names))
+
+    for i in range(25):
+        print(row_names[i], final_dataset[i, 0])
