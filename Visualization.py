@@ -6,7 +6,10 @@ X = process_data.X
 X = X.T
 
 for i in range(X.shape[0]):
-    plt.figure(figsize=(16, 16))
+    if i == 21:
+        plt.figure(figsize=(16, 22))
+    else:
+        plt.figure(figsize=(16, 16))
     if i == 0 or i == 2 or i == 3 or i == 4 or i == 10 or i == 15 or i == 16 or i == 17 or i == 18:
         continue
     unique_values, counts = np.unique(X[i], return_counts=True)
