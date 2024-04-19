@@ -29,7 +29,8 @@ for i in string_rows:
     X_test[i] = np.array([dictionary[x] for x in X_test[i]])
 
 
-final_dataset = []
+train_dataset = []
+test_dataset = []
 row_names = []
 
 it = 0
@@ -37,32 +38,47 @@ it = 0
 for rowIndex in range(X_train.shape[0]):
 
     row = X_train[rowIndex, :]
+    testRow = X_test[rowIndex, :] 
     first_entry = row[0] 
 
     if type(first_entry) is not str:
-        final_dataset.append(row)
+        train_dataset.append(row)
+        test_dataset.append(testRow)
         row_names.append(data_headers[it])
     else:
+        ### train
         bp_list = row.tolist()
         split_bp_list = [bp.split('/') for bp in bp_list]
         systolic_bp_list = np.array([int(bp[0]) for bp in split_bp_list])
         diastolic_bp_list = np.array([int(bp[1]) for bp in split_bp_list])
+        train_dataset.append(systolic_bp_list)
+        train_dataset.append(diastolic_bp_list)
+        #### test
+        bp_list = testRow.tolist()
+        split_bp_list = [bp.split('/') for bp in bp_list]
+        systolic_bp_list = np.array([int(bp[0]) for bp in split_bp_list])
+        diastolic_bp_list = np.array([int(bp[1]) for bp in split_bp_list])
+        test_dataset.append(systolic_bp_list)
+        test_dataset.append(diastolic_bp_list)
+        ### idk
         row_names.append("Systolic Blood Pressure")
         row_names.append("Diastolic Blood Pressure")
-        final_dataset.append(systolic_bp_list)
-        final_dataset.append(diastolic_bp_list)
 
     it += 1
 
-final_dataset = np.array(final_dataset)
+train_dataset = np.array(train_dataset)
+test_dataset = np.array(test_dataset)
 
 if __name__ == '__main__':
     # testing here
     print(X_train.shape)
-    print(final_dataset.shape)
-    print(final_dataset[3])
-    print(final_dataset[4])
+    print(train_dataset.shape)
+    print(train_dataset[3])
+    print(train_dataset[4])
     print(len(row_names))
 
     for i in range(25):
-        print(row_names[i], final_dataset[i, 0])
+        print(row_names[i], train_dataset[i, 0])
+
+    print(test_dataset)
+    print(test_dataset.shape)
