@@ -10,4 +10,4 @@ lr = LogisticRegression(max_iter=10, random_state=67)
 lr.fit(train_scaled, process_data.y_train)
 lr_predictions = lr.predict(test_scaled)
 accuracy = accuracy_score(process_data.y_test, lr_predictions)
-print("Logistic Regression Accuracy:", accuracy)
+
