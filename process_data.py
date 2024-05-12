@@ -12,6 +12,15 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 X_train = X_train.T
 X_test = X_test.T
 
+data1 = pd.read_csv('heart_disease_health_indicators.csv')
+X1 = data1.iloc[:, 1:].values
+y1 = data1.iloc[:, 0].values
+X_train1, X_test1, y_train1, y_test1 = train_test_split(X1, y1, test_size=0.2, random_state=14)
+X_train1 = X_train1.T
+X_test1 = X_test1.T
+X_train1 = np.array(X_train1)
+X_test1 = np.array(X_test1)
+
 first_column = X_train[:, 1]
 string_rows = []
 
